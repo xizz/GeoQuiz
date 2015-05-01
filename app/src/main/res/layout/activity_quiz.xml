@@ -1,12 +1,12 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	xmlns:tools="http://schemas.android.com/tools"
-	android:layout_width="match_parent"
-	android:layout_height="match_parent"
-	android:paddingBottom="@dimen/activity_vertical_margin"
-	android:paddingLeft="@dimen/activity_horizontal_margin"
-	android:paddingRight="@dimen/activity_horizontal_margin"
-	android:paddingTop="@dimen/activity_vertical_margin"
-	tools:context=".QuizActivity">
+             xmlns:tools="http://schemas.android.com/tools"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             android:paddingBottom="@dimen/activity_vertical_margin"
+             android:paddingLeft="@dimen/activity_horizontal_margin"
+             android:paddingRight="@dimen/activity_horizontal_margin"
+             android:paddingTop="@dimen/activity_vertical_margin"
+             tools:context=".QuizActivity">
 
 	<TextView
 		android:id="@+id/question_text_view"
@@ -14,27 +14,42 @@
 		android:layout_height="wrap_content"
 		android:layout_gravity="center_horizontal"
 		android:padding="24dp"
-		android:text="place holder" />
+		android:text="place holder"/>
+
 
 	<LinearLayout
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:layout_gravity="center"
-		android:orientation="horizontal">
+		android:orientation="vertical">
 
-		<Button
-			android:id="@+id/true_button"
+		<LinearLayout
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:onClick="click"
-			android:text="@string/true_button" />
+			android:orientation="horizontal">
+
+			<Button
+				android:id="@+id/true_button"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:onClick="click"
+				android:text="@string/true_button"/>
+
+			<Button
+				android:id="@+id/false_button"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:onClick="click"
+				android:text="@string/false_button"/>
+		</LinearLayout>
 
 		<Button
-			android:id="@+id/false_button"
+			android:id="@+id/cheat_button"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:onClick="click"
-			android:text="@string/false_button" />
+			android:layout_gravity="center"
+			android:onClick="startCheatActivity"
+			android:text="@string/cheat_button"/>
 
 	</LinearLayout>
 
@@ -46,7 +61,7 @@
 		android:drawableLeft="@mipmap/arrow_left"
 		android:drawablePadding="4dp"
 		android:onClick="click"
-		android:text="@string/previous_button" />
+		android:text="@string/previous_button"/>
 
 	<Button
 		android:id="@+id/next_button"
@@ -56,6 +71,6 @@
 		android:drawablePadding="4dp"
 		android:drawableRight="@mipmap/arrow_right"
 		android:onClick="click"
-		android:text="@string/next_button" />
+		android:text="@string/next_button"/>
 
 </FrameLayout>
