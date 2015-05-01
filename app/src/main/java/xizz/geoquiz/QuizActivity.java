@@ -2,6 +2,7 @@ package xizz.geoquiz;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
@@ -10,8 +11,11 @@ import android.widget.Toast;
 
 
 public class QuizActivity extends Activity {
+	private static final String TAG = "QuizActivity";
+	private static final String KEY_INDEX = "index";
 
 	private Button mPreviousButton;
+	private Button mNextButton;
 
 	private TextView mQuestionTextView;
 
@@ -31,14 +35,30 @@ public class QuizActivity extends Activity {
 		setContentView(R.layout.activity_quiz);
 
 		mPreviousButton = (Button) findViewById(R.id.previous_button);
+		mNextButton = (Button) findViewById(R.id.next_button);
 		mQuestionTextView = (TextView) findViewById(R.id.question_text_view);
 		mQuestionTextView.setOnClickListener(new View.OnClickListener() {
 			@Override
-			public void onClick(View v) {
-				click(v);
-			}
+			public void onClick(View v) { click(v); }
 		});
+	}
 
+	@Override
+	protected void onSaveInstanceState(Bundle outState) {
+		super.onSaveInstanceState(outState);
+		Log.i(TAG, "onSavedInstanceState");
+		outState.putInt(KEY_INDEX, mCurrentIndex);
+	}
+
+	@Override
+	protected void onRestoreInstanceState(Bundle savedInstanceState) {
+		mCurrentIndex = savedInstanceState.getInt(KEY_INDEX, 0);
+		super.onRestoreInstanceState(savedInstanceState);
+	}
+
+	@Override
+	protected void onResume() {
+		super.onResume();
 		updateUI();
 	}
 
@@ -49,17 +69,15 @@ public class QuizActivity extends Activity {
 	}
 
 	private void updateUI() {
-		int question = mAnswerKey[mCurrentIndex % mAnswerKey.length].question;
+		int question = mAnswerKey[mCurrentIndex].question;
 		mQuestionTextView.setText(question);
 
-		if (mCurrentIndex > 0)
-			mPreviousButton.setEnabled(true);
-		else
-			mPreviousButton.setEnabled(false);
+		mPreviousButton.setEnabled(mCurrentIndex > 0);
+		mNextButton.setEnabled(mCurrentIndex < mAnswerKey.length - 1);
 	}
 
 	private void checkAnswer(boolean userAnswer) {
-		boolean answer = mAnswerKey[mCurrentIndex % mAnswerKey.length].answer;
+		boolean answer = mAnswerKey[mCurrentIndex].answer;
 
 		if (userAnswer == answer)
 			Toast.makeText(this, R.string.correct_toast, Toast.LENGTH_SHORT).show();
@@ -76,10 +94,8 @@ public class QuizActivity extends Activity {
 				checkAnswer(false);
 				break;
 			case R.id.previous_button:
-				if (mCurrentIndex > 0) {
-					--mCurrentIndex;
-					updateUI();
-				}
+				--mCurrentIndex;
+				updateUI();
 				break;
 			case R.id.question_text_view:
 			case R.id.next_button:
