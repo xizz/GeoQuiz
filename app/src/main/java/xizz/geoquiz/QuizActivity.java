@@ -1,5 +1,6 @@
 package xizz.geoquiz;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -37,6 +38,9 @@ public class QuizActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_quiz);
+
+		ActionBar actionBar = getActionBar();
+		actionBar.setSubtitle(R.string.subtitle);
 
 		mQuestionsCheated = new boolean[mAnswerKeys.length];
 		Log.d(TAG, "onCreate, index: " + mCurrentIndex + " cheated: " +
